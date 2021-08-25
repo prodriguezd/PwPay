@@ -1,0 +1,99 @@
+{% extends "base.twig" %}
+
+{% block title %}Pwpay{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link href="{{ full_url_for('landing') }}assets/css/base.css" rel="stylesheet">
+<link href="{{ full_url_for('landing') }}assets/css/landing.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Pwpay</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        {% if user.id %}
+        <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> MyProfile</a></li>
+        <li><a href="/account">My Account</a></li>
+        <li><a href="/transacctions">Transactions</a></li>
+        {% endif %}
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if not user.id %}
+        <li><a href="/sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+        <li><a href="/sign-up"><span class="glyphicon glyphicon-list-alt"></span> Sign Up</a></li>
+        {% endif %}
+        {% if user.id %}
+        <!-- <li><a href="/sign-in"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li> -->
+
+        <!-- INVISIBLE FORM -->
+        <li>
+        <form action="/logout" method="POST">
+          <button class="button buttonLogout">
+          <span class="glyphicon glyphicon-log-out"></span> Logout
+          </button>
+        </form>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="jumbotron text-center">
+  <h1>PwPay</h1> 
+  <p>Your virtual wallet</p> 
+</div>
+
+<div id="services" class="container-fluid text-center">
+  <h2>SERVICES</h2>
+  <h4>What we offer</h4>
+  <br><br>
+  <div class="row slideanim">
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-euro logo-small"></span>
+      <h4>MONEY</h4>
+      <p>We offer you a 20€ gift</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-piggy-bank logo-small"></span>
+      <h4>SAVINGS</h4>
+      <p>Start controling your expenses</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-send logo-small"></span>
+      <h4>FREE MONEY TRANSFERS</h4>
+      <p>Send and receive money without any additional charges</p>
+    </div>
+  </div>
+  <br><br><br>
+  <div class="row slideanim">
+    <div class="col-sm-4 center">
+      <span class="glyphicon glyphicon-map-marker logo-small"></span>
+      <h4>La Salle</h4>
+      <p>Only for students from La Salle Campus BCN</p>
+    </div>
+    <div class="col-sm-4 center">
+      <span class="glyphicon glyphicon-credit-card logo-small"></span>
+      <h4>CHARGE MONEY</h4>
+      <p>Charge money from your bank account</p>
+    </div>
+  </div>
+</div>
+<br><br><br>
+
+
+{% endblock %}

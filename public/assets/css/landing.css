@@ -1,0 +1,12 @@
+.jumbotron {
+    background-image:  url(../images/bg-masthead.jpg);
+    color: #fff;
+    padding: 100px 25px;
+    font-family: Montserrat, sans-serif;
+}
+
+
+.logo-small {
+    color: 	#c4d9ee;
+    font-size: 50px;
+}

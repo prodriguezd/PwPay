@@ -1,0 +1,106 @@
+{% extends "base.twig" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+
+<link href="{{ full_url_for('landing') }}assets/css/base.css" rel="stylesheet">
+<link href="{{ full_url_for('landing') }}assets/css/dashboard.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Pwpay</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/account/summary">Home</a></li>
+        <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> MyProfile</a></li>
+        <li><a href="/account/bank-account">Load Money</a></li>
+        <li><a href="/account/money/send">Send Money</a></li>
+        <li><a href="/account/money/requests">Request Money</a></li>
+        <li><a href="/account/money/requests/pending">Pending Request</a></li>
+        <li class="active"><a href="/account/transactions">Transactions</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <!-- INVISIBLE FORM -->
+        <li>
+        <form action="/logout" method="POST">
+          <button class="button buttonLogout">
+          <span class="glyphicon glyphicon-log-out"></span> Logout
+          </button>
+        </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="row m-t-25 text-center">
+                        <div class="status">
+                            <div class="text-center">
+                                <h3>Current balance</h3>
+                            </div>
+                            
+                                <h1 class ="price"> {{ money }} €</h1>
+                            
+                        </div>
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <div class="table-responsive m-b-40">
+                                {% if transactions is defined and transactions is not null %} 
+                                    <table class="table table-borderless table-data3">
+                                        <thead>
+                                            <tr>
+                                                <th>date</th>
+                                                <th>sender</th>
+                                                <th>reciever</th>
+                                                <th>amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for transaction in transactions %}
+                                            <tr>
+                                                <td>{{ transaction.date }}</td>
+                                                <td>{{ transaction.sendername }}</td>
+                                                <td>{{ transaction.receivername }}</td>
+                                                {% if user_id  == transaction.receiverid and user_id  == transaction.senderid%}
+                                                    <td style="color: #475ac5;">+{{ transaction.amount }}</td>
+                                                {% elseif user_id == transaction.senderid %}
+                                                    <td style="color: #fa4251;">-{{ transaction.amount }}</td>
+                                                {% else %}
+                                                    <td style="color: #00ad5f;">{{ transaction.amount }}</td>
+                                                {% endif %}
+
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                
+
+                                {% else %}
+                                <h3 >There are no transactions yet<h3>
+                                {% endif %} 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

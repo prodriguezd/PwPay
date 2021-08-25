@@ -1,0 +1,99 @@
+{% extends "base.twig" %}
+
+{% block title %}Pwpay{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+<!--
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+-->
+
+<link href="{{ full_url_for('landing') }}assets/css/base.css" rel="stylesheet">
+<link href="{{ full_url_for('landing') }}assets/css/form.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Pwpay</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/account/summary">Home</a></li>
+        <li class="active"><a href="/profile"><span class="glyphicon glyphicon-user"></span> MyProfile</a></li>
+        <li><a href="/account/bank-account">Load Money</a></li>
+        <li><a href="/account/bank-account">Send Money</a></li>
+        <li><a href="/account/bank-account">Request Money</a></li>
+        <li><a href="/account/bank-account">Pending Request</a></li>
+        <li><a href="/account/transactions">Transactions</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <!-- INVISIBLE FORM -->
+        <li>
+        <form action="/logout" method="POST">
+          <button class="button buttonLogout">
+          <span class="glyphicon glyphicon-log-out"></span> Logout
+          </button>
+        </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-login100">
+  <div class="wrap-login100 p-t-30 p-b-50">
+    <span class="login100-form-title p-b-41">
+      {{ user.name }}
+    </span>
+
+    <br>
+
+    <form class="login100-form validate-form p-b-33 p-t-5" action="/profile" method="POST" accept-charset="utf-8">
+
+      <div class="wrap-input100 validate-input">
+        <input class="input100" type="text" name="birthdate" value= "{{ user.birthdate }}" readonly>
+      </div>
+
+      <div class="wrap-input100 validate-input">
+        <input class="input100" type="text" name="email" value= "{{ user.email }}" readonly>
+      </div>
+
+      <div class="wrap-input100 validate-input">
+        {% if formErrors.phone %}
+        <input class="input100" type="text" name="phone" value={{ formData.phone }}>
+        <span class="error">{{ formErrors.phone }}</span>
+        {% else %}
+        <input class="input100" type="text" name="phone"  {%if formData.phone %}value="{{ formData.phone }}"  {% else %} placeholder = "phone (+34 )" {% endif %}>
+        {% endif %}
+      </div>
+
+      <br> <br>
+      <div class="container-login100-form-btn m-t-32">
+        <button class="login100-form-btn">
+          Edit Profile
+        </button>
+      </div>
+
+      <br>
+    </form>
+      <br>
+     <div class="container-login100-form-btn m-t-32">
+        <button class="login100-form-btn">
+          <a href="/profile/security">Change Password</a>
+          
+        </button>
+      </div>
+
+  </div>
+</div>
+
+{% endblock %}

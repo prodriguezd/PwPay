@@ -1,0 +1,33 @@
+body {
+    background-color: #e6e6e6;
+}
+
+footer {
+    background-color: #555;
+    color: white;
+    padding: 10px;
+}
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+  
+.row.content {height: 450px}
+  
+.sidenav {
+    padding-top: 20px;
+    background-color: #f1f1f1;
+    height: 100%;
+}
+
+
+.buttonLogout {
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    color: #9d9d9d;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    outline:none;
+    background-color: transparent;
+}

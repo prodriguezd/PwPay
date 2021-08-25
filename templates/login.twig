@@ -1,0 +1,75 @@
+{% extends "base.twig" %}
+
+{% block title %}Sign In to Pwpay{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link href="{{ full_url_for('landing') }}assets/css/base.css" rel="stylesheet">
+<link href="{{ full_url_for('landing') }}assets/css/form.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Pwpay</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="/sign-in"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+        <li><a href="/sign-up"><span class="glyphicon glyphicon-list-alt"></span> Sign Up</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-login100">
+  <div class="wrap-login100 p-t-30 p-b-50">
+    <span class="login100-form-title p-b-41">
+      Sign in to PwPay
+    </span>
+
+    <br>
+
+    <form class="login100-form validate-form p-b-33 p-t-5" action="/sign-in" method="POST" accept-charset="utf-8">
+
+      <div class="wrap-input100 validate-input">
+        {% if formErrors.email %}
+        <input class="input100" type="text" name="email" value={{ formData.email }}>
+        <span class="error">{{ formErrors.email }}</span>
+        {% else %}
+        <input class="input100" type="text" name="email"  {%if formData.email %}value="{{ formData.email }}"  {% else %} placeholder = "email" {% endif %}>
+        {% endif %}
+      </div>
+
+      <div class="wrap-input100 validate-input" data-validate="Enter password">
+        {% if formErrors.password %}
+        <input class="input100" type="password" name="password" value={{ formData.password }}>
+        <span class="error">{{ formErrors.password }}</span>
+        {% else %}
+        <input class="input100" type="password" name="password" {%if formData.password %}value="{{ formData.password }}"  {% else %} placeholder = "password" {% endif %}>
+        {% endif %}
+        
+      </div>
+
+      <br> <br>
+      <div class="container-login100-form-btn m-t-32">
+        <button class="login100-form-btn">
+          Login
+        </button>
+      </div>
+
+      <br>
+    </form>
+  </div>
+</div>
+{% endblock %}

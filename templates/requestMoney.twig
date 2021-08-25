@@ -1,0 +1,87 @@
+{% extends "base.twig" %}
+
+{% block title %}Request Money{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+
+<link href="{{ full_url_for('landing') }}assets/css/base.css" rel="stylesheet">
+<link href="{{ full_url_for('landing') }}assets/css/form.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Pwpay</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/account/summary">Home</a></li>
+        <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> MyProfile</a></li>
+        <li><a href="/account/bank-account">Load Money</a></li>
+        <li><a href="/account/money/send">Send Money</a></li>
+        <li class="active"><a href="/account/money/requests">Request Money</a></li>
+        <li><a href="/account/money/requests/pending">Pending Request</a></li>
+        <li><a href="/account/transactions">Transactions</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <!-- INVISIBLE FORM -->
+        <li>
+        <form action="/logout" method="POST">
+          <button class="button buttonLogout">
+          <span class="glyphicon glyphicon-log-out"></span> Logout
+          </button>
+        </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container-login100">
+  <div class="wrap-login100 p-t-30 p-b-50">
+    <span class="login100-form-title p-b-41">
+      Request Money
+    </span>
+
+    <br>
+
+    <form class="login100-form validate-form p-b-33 p-t-5" action="/account/money/requests" method="POST" accept-charset="utf-8">
+
+      <div class="wrap-input100 validate-input">
+        {% if formErrors.who %}
+        <input class="input100" type="text" name="who" value={{ formData.who }}>
+        <span class="error">{{ formErrors.who }}</span>
+        {% else %}
+        <input class="input100" type="text" name="who"  {%if formData.who %}value="{{ formData.who }}"  {% else %} placeholder = "who (email)" {% endif %}>
+        {% endif %}
+      </div>
+
+      <div class="wrap-input100 validate-input">
+        {% if formErrors.amount %}
+        <input class="input100" type="text" name="amount" value={{ formData.amount }}>
+        <span class="error">{{ formErrors.amount }}</span>
+        {% else %}
+        <input class="input100" type="text" name="amount"  {%if formData.amount %}value="{{ formData.amount }}"  {% else %} placeholder = "amount" {% endif %}>
+        {% endif %}
+      </div>
+
+      <br> <br>
+      <div class="container-login100-form-btn m-t-32">
+        <button class="login100-form-btn">
+          Request money
+        </button>
+      </div>
+
+      <br>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}

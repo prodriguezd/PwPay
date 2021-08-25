@@ -1,0 +1,122 @@
+
+{% extends "base.twig" %}
+
+{% block title %}Load Money{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+
+<link href="{{ full_url_for('landing') }}assets/css/base.css" rel="stylesheet">
+<link href="{{ full_url_for('landing') }}assets/css/form.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Pwpay</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/account/summary">Home</a></li>
+        <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> MyProfile</a></li>
+        <li class="active"><a href="/account/bank-account">Load Money</a></li>
+        <li><a href="/account/money/send">Send Money</a></li>
+        <li><a href="/account/money/requests">Request Money</a></li>
+        <li><a href="/account/money/requests/pending">Pending Request</a></li>
+        <li><a href="/account/transactions">Transactions</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <!-- INVISIBLE FORM -->
+        <li>
+        <form action="/logout" method="POST">
+          <button class="button buttonLogout">
+          <span class="glyphicon glyphicon-log-out"></span> Logout
+          </button>
+        </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+{% if IBAN is null or IBANOK == false %}
+<div class="container-login100">
+  <div class="wrap-login100 p-t-30 p-b-50">
+    <span class="login100-form-title p-b-41">
+      Add IBAN
+    </span>
+
+    <br>
+
+    <form class="login100-form validate-form p-b-33 p-t-5" action="/account/bank-account" method="POST" accept-charset="utf-8">
+
+      <div class="wrap-input100 validate-input">
+        {% if formErrors.ownerName %}
+        <input class="input100" type="text" name="ownerName" value={{ formData.ownerName }}>
+        <span class="error">{{ formErrors.ownerName }}</span>
+        {% else %}
+        <input class="input100" type="text" name="ownerName"  {%if formData.ownerName %}value="{{ formData.ownerName }}"  {% else %} placeholder = "owner name" {% endif %}>
+        {% endif %}
+      </div>
+
+      <div class="wrap-input100 validate-input">
+        {% if formErrors.iban %}
+        <input class="input100" type="text" name="iban" value={{ formData.iban }}>
+        <span class="error">{{ formErrors.iban }}</span>
+        {% else %}
+        <input class="input100" type="text" name="iban"  {%if formData.iban %}value="{{ formData.iban }}"  {% else %} placeholder = "IBAN" {% endif %}>
+        {% endif %}
+      </div>
+
+      <br> <br>
+      <div class="container-login100-form-btn m-t-32">
+        <button class="login100-form-btn">
+          Register Account
+        </button>
+      </div>
+
+      <br>
+    </form>
+  </div>
+</div>
+{% else %}
+
+<div class="container-login100">
+  <div class="wrap-login100 p-t-30 p-b-50">
+    <span class="login100-form-title p-b-41">
+       {{ IBAN }}
+    </span>
+
+    <br>
+
+    <form class="login100-form validate-form p-b-33 p-t-5" action="/account/bank-account/load" method="POST" accept-charset="utf-8">
+
+      <div class="wrap-input100 validate-input">
+        {% if formErrors.amount %}
+        <input class="input100" type="text" name="amount" value={{ formData.amount }}>
+        <span class="error">{{ formErrors.amount }}</span>
+        {% else %}
+        <input class="input100" type="text" name="amount"  {%if formData.amount %}value="{{ formData.amount }}"  {% else %} placeholder = "amount" {% endif %}>
+        {% endif %}
+      </div>
+
+      <br> <br>
+      <div class="container-login100-form-btn m-t-32">
+        <button class="login100-form-btn">
+          Load Money
+        </button>
+      </div>
+
+      <br>
+    </form>
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock %}

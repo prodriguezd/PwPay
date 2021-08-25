@@ -1,0 +1,92 @@
+{% extends "base.twig" %}
+
+{% block title %}Pending Requests{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+
+<link href="{{ full_url_for('landing') }}assets/css/base.css" rel="stylesheet">
+<link href="{{ full_url_for('landing') }}assets/css/dashboard.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Pwpay</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/account/summary">Home</a></li>
+        <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> MyProfile</a></li>
+        <li><a href="/account/bank-account">Load Money</a></li>
+        <li><a href="/account/money/send">Send Money</a></li>
+        <li><a href="/account/money/requests">Request Money</a></li>
+        <li class="active"><a href="/account/money/requests/pending">Pending Request</a></li>
+        <li><a href="/account/transactions">Transactions</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <!-- INVISIBLE FORM -->
+        <li>
+        <form action="/logout" method="POST">
+          <button class="button buttonLogout">
+          <span class="glyphicon glyphicon-log-out"></span> Logout
+          </button>
+        </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <div class="table-responsive m-b-40">
+                                {% if transactions is defined and transactions is not null %} 
+                                    <table class="table table-borderless table-data3">
+                                        <thead>
+                                            <tr>
+                                                <th>date</th>
+                                                <th>requested from</th>
+                                                <th>amount</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for transaction in transactions %}
+                                            <tr>
+                                            <!--  -->
+                                                <form method='GET' action="{{ url_for('acceptRequestMoney', { 'id' : transaction.id }) }}"">
+                                                    <input type="hidden" name="id" value={{ transaction.id }} />
+                                                    <td>{{ transaction.date }}</td>
+                                                    <td>{{ transaction.receivername }}</td>
+                                                    <td style="color: #fa4251;">{{ transaction.amount }}</td>
+                                                    <td><input type="submit" value="Pay money request"></td>
+                                                </form>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                {% else %}
+                                <h3 >There are no pending requests<h3>
+                                {% endif %} 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
